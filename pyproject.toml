@@ -1,0 +1,62 @@
+[tool.poetry]
+name = "toothcomb"
+version = "0.1.1"
+description = "toothcomb - comb through logs for entries of interest"
+
+readme = 'README.md'
+
+authors = ["Mark Rutter <mark.rutter@metaswitch.com>"]
+
+keywords = []
+
+[tool.poetry.scripts]
+toothcomb = "toothcomb.scripts.toothcomb:main"
+
+[tool.poetry.dependencies]
+python = "^2.7 || ^3.6"
+pyyaml = "^5.4"
+
+# For `tox` testing, you must provide all test requirements as optional
+# requirements in `dependencies` and in `extras.test` section.
+# For testing via `poetry run pytest` they must also be as mandatory
+# requirements in `dev-dependencies`.
+pytest = { version = "^5.3.1", optional = true }
+pytest-subtests = { version = "^0.2.1", optional = true }
+coverage = { version = "^4.5.4", optional = true }
+pytest-cov = { version = "^2.8.1", optional = true }
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.3.1"
+pytest-subtests = "^0.2.1"
+coverage = "^4.5.4"
+pytest-cov = "^2.8.1"
+python-static-checks = "^0.10.0"
+mypy = "^0.790"
+
+[tool.poetry.extras]
+# For `tox` testing, you must provide all test requirements as optional
+# requirements in `dependencies` and in `extras.test` section.
+# For testing via `poetry run pytest` they must also be as mandatory
+# requirements in `dev-dependencies`.
+test = ["pytest", "pytest-subtests", "pytest-cov", "coverage"]
+
+[tool.pytest]
+mock_use_standalone_module = true
+
+[build-system]
+requires = ["poetry>=1.0.0"]
+build-backend = "poetry.masonry.api"
+
+[tool.isort]
+# Black compatible settings
+# see https://github.com/psf/black#the-black-code-style
+multi_line_output=3
+include_trailing_comma=true
+force_grid_wrap=0
+use_parentheses=true
+line_length=88
+
+[tool.pylint.messages_control]
+# Ignore test code as pylint doesn't get along with pytest fixtures very well.
+# These patterns are applied per-file and cannot be applied to entire directories.
+ignore-patterns = "test.*,.*test,conftest.py"
